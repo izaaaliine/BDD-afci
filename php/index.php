@@ -21,18 +21,18 @@ try {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Afci Base de Données</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="home">
-    <ul class="navBar">
-        <a href="?page=role"><li>Rôle</li></a>
-        <a href="?page=centre"><li>Centres</li></a>
-        <a href="?page=formation"><li>Formations</li></a>
-        <a href="?page=pedagogie"><li>Équipe Pédagogique</li></a>
-        <a href="?page=session"><li>Session</li></a>
-        <a href="?page=apprenant"><li>Apprenants</li></a>
-    </ul></div>
+        <ul class="navBar">
+            <a href="?page=role"><li>Rôle</li></a>
+            <a href="?page=centre"><li>Centres</li></a>
+            <a href="?page=formation"><li>Formations</li></a>
+            <a href="?page=pedagogie"><li>Équipe Pédagogique</li></a>
+            <a href="?page=session"><li>Session</li></a>
+            <a href="?page=apprenant"><li>Apprenants</li></a>
+        </ul></div>
     <div class="page1">
 <?php
 $host = "mysql"; // Remplacez par l'hôte de votre base de données
