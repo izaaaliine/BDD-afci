@@ -634,12 +634,19 @@ $pass = "admin"; // Remplacez par votre mot de passe
                         $updateIdFormation = $_POST["updateIdFormation"];
                         $updateIdCentre = $_POST["updateIdCentre"];
 
+                        // Mise à jour de la table 'session'
                         $sqlUpdateSession = "UPDATE `session` SET `nom_session`=?, `date_debut`=?, `id_pedagogie`=?, `id_formation`=?, `id_centre`=? WHERE `id_session`=?";
                         $stmtUpdateSession = $bdd->prepare($sqlUpdateSession);
                         $stmtUpdateSession->execute([$updateNomSession, $updateDateDebut, $updateIdPedagogie, $updateIdFormation, $updateIdCentre, $updateIdSession]);
-                        $sqlUpdateLocaliser = "UPDATE `localiser` SET `id_formation`='$updateIdFormation',`id_centre`='$updateIdCentre' WHERE 1"; 
-                        $bdd->query($sqlUpdateLocaliser);
-                        echo "Données modifiées";
+
+                        // Mise à jour de la table 'localiser'
+                        $sqlUpdateLocaliser = "UPDATE `localiser` SET `id_formation`=?, `id_centre`=? WHERE `id_formation`=? AND `id_centre`=?";
+                        $stmtUpdateLocaliser = $bdd->prepare($sqlUpdateLocaliser);
+                        $stmtUpdateLocaliser->execute([$updateIdFormation, $updateIdCentre, $resultsIdSession['id_formation'], $resultsIdSession['id_centre']]);
+
+
+
+
                     }
                 }
 
