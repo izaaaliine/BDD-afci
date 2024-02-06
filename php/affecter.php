@@ -67,8 +67,9 @@
             if (isset($_POST['submitAffecter'])){
                 $affecterPedagogie = $_POST['affecterPedagogie'];
                 $affecterCentres = $_POST['affecterCentres'];
-                $sql = "INSERT INTO `affecter`(`id_pedagogie`, `id_centre`) VALUES ('$affecterPedagogie','$affecterCentres')";
-                $bdd->query($sql);
+                $sql = "INSERT INTO `affecter`(`id_pedagogie`, `id_centre`) VALUES (?, ?)";
+                $stmt = $bdd->prepare($sql);
+                $stmt->execute([$affecterPedagogie, $affecterCentres]);
                 echo "Données ajoutées dans la BDD";
             }
             // supprimer données affecter
@@ -88,9 +89,7 @@
                             echo "Données supprimées";
                         } else {
                             echo "Erreur lors de la suppression des données : " . $stmt->errorInfo()[2];
-                        }
-
-                    
+                        }               
                     }
             } 
         }        

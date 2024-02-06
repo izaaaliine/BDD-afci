@@ -54,8 +54,13 @@
                     $niveauSortieFormation = $_POST['niveauSortieFormation'];
                     $descriptionFormation = $_POST['descriptionFormation'];
 
-                    $sql = "INSERT INTO `formations`(`nom_formation`, `duree_formation`, `niveau_sortie_formation`, `description`) VALUES ('$nomFormation','$dureeFormation','$niveauSortieFormation','$descriptionFormation')";
-                    $bdd->query($sql);
+                     $sql = "INSERT INTO `formations`(`nom_formation`, `duree_formation`, `niveau_sortie_formation`, `description`) VALUES (:nomFormation, :dureeFormation, :niveauSortieFormation, :descriptionFormation)";
+                    $stmt = $bdd->prepare($sql);
+                    $stmt->bindParam(':nomFormation', $nomFormation, PDO::PARAM_STR);
+                    $stmt->bindParam(':dureeFormation', $dureeFormation, PDO::PARAM_STR);
+                    $stmt->bindParam(':niveauSortieFormation', $niveauSortieFormation, PDO::PARAM_STR);
+                    $stmt->bindParam(':descriptionFormation', $descriptionFormation, PDO::PARAM_STR);
+                    $stmt->execute();
                     echo "Données ajoutées dans la BDD";
                 }
             // modifier données formation
@@ -95,9 +100,10 @@
                 if (isset($_GET['type']) && $_GET['type'] == "supprimer") {
                     if (isset($_POST["id_formation"])) {
                         $deleteIdFormation = $_POST["id_formation"];
-                        $sqlDeleteFormation = "DELETE FROM `formations` WHERE id_formation = $deleteIdFormation";
-
-                        $bdd->query($sqlDeleteFormation);
+                        $sqlDeleteFormation = "DELETE FROM `formations` WHERE id_formation = :deleteIdFormation";
+                        $stmtDeleteFormation = $bdd->prepare($sqlDeleteFormation);
+                        $stmtDeleteFormation->bindParam(':deleteIdFormation', $deleteIdFormation, PDO::PARAM_INT);
+                        $stmtDeleteFormation->execute();
                         echo "Données supprimées";
                     }
                 }

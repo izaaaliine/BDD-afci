@@ -146,8 +146,10 @@
                 $idApprenant1 = $_POST['idApprenant1'];
                 $idApprenant2 = $_POST['idApprenant2'];
 
-                $sql = "INSERT INTO `apprenants`(`nom_apprenant`, `prenom_apprenant`, `mail_apprenant`, `adresse_apprenant`, `ville_apprenant`, `code_postal_apprenant`, `tel_apprenant`, `date_naissance_apprenant`, `niveau_apprenant`, `num_PE_apprenant`, `num_secu_apprenant`, `rib_apprenant`, `id_role`, `id_session`) VALUES ('$nomApprenant','$prenomApprenant','$mailApprenant','$adresseApprenant',' $villeApprenant','$cpApprenant','$telApprenant','$dateNaissanceApprenant','$niveauApprenant','$numPEApprenant','$numSSApprenant','$ribApprenant','$idApprenant1','$idApprenant2')";
-                $bdd->query($sql);
+                $sql = "INSERT INTO `apprenants`(`nom_apprenant`, `prenom_apprenant`, `mail_apprenant`, `adresse_apprenant`, `ville_apprenant`, `code_postal_apprenant`, `tel_apprenant`, `date_naissance_apprenant`, `niveau_apprenant`, `num_PE_apprenant`, `num_secu_apprenant`, `rib_apprenant`, `id_role`, `id_session`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                $stmt = $bdd->prepare($sql);
+                $stmt->execute([$nomApprenant, $prenomApprenant, $mailApprenant, $adresseApprenant, $villeApprenant, $cpApprenant, $telApprenant, $dateNaissanceApprenant, $niveauApprenant, $numPEApprenant, $numSSApprenant, $ribApprenant, $idApprenant1, $idApprenant2]);
+
                 echo "Données ajoutées dans la BDD";
             }
         // modifier données apprenants 
@@ -221,11 +223,12 @@
         // supprimer données apprenants
                 if (isset($_GET['type']) && $_GET['type'] == "supprimer") {
                     if (isset($_POST["id_apprenant"])) {
-                        $deleteIdApprenant= $_POST["id_apprenant"];
-                        $sqlDeleteApprenant= "DELETE FROM `apprenants` WHERE id_apprenant = $deleteIdApprenant";
-
-                        $bdd->query($sqlDeleteApprenant);
-                        echo "Données supprimées";
+                    $deleteIdApprenant= $_POST["id_apprenant"];
+                    $sqlDeleteApprenant = "DELETE FROM `apprenants` WHERE id_apprenant = ?";
+                    $stmtDeleteApprenant = $bdd->prepare($sqlDeleteApprenant);
+                    $stmtDeleteApprenant->execute([$deleteIdApprenant]);
+                    
+                    echo "Données supprimées";
                     }
                 }    
         }

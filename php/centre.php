@@ -49,9 +49,12 @@
                 $adresseCentre = $_POST['adresseCentre'];
                 $codePostalCentre = $_POST['codePostalCentre'];
 
-                $sql = "INSERT INTO `centres` (`ville_centre`, `adresse_centre`, `code_postal_centre`) VALUES (?, ?, ?)";
+                $sql = "INSERT INTO `centres` (`ville_centre`, `adresse_centre`, `code_postal_centre`) VALUES (:villeCentre, :adresseCentre, :codePostalCentre)";
                 $stmt = $bdd->prepare($sql);
-                $stmt->execute([$villeCentre, $adresseCentre, $codePostalCentre]);
+                $stmt->bindParam(':villeCentre', $villeCentre, PDO::PARAM_STR);
+                $stmt->bindParam(':adresseCentre', $adresseCentre, PDO::PARAM_STR);
+                $stmt->bindParam(':codePostalCentre', $codePostalCentre, PDO::PARAM_STR);
+                $stmt->execute();
                 echo "Données ajoutées dans la BDD";
             }
         // modifier données centre
@@ -86,9 +89,10 @@
                 if (isset($_GET['type']) && $_GET['type'] == "supprimer") {
                     if (isset($_POST["id_centre"])) {
                         $deleteIdCentre = $_POST["id_centre"];
-                        $sqlDeleteCentre = "DELETE FROM `centres` WHERE id_centre = $deleteIdCentre";
-
-                        $bdd->query($sqlDeleteCentre);
+                        $sqlDeleteCentre = "DELETE FROM `centres` WHERE id_centre = :deleteIdCentre";
+                        $stmtDeleteCentre = $bdd->prepare($sqlDeleteCentre);
+                        $stmtDeleteCentre->bindParam(':deleteIdCentre', $deleteIdCentre, PDO::PARAM_INT);
+                        $stmtDeleteCentre->execute();
                         echo "Données supprimées";
                     }
                 }   

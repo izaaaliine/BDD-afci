@@ -122,10 +122,14 @@
                     $idSession2 = $_POST['idSession2'];
                     $idSession3 = $_POST['idSession3'];
 
-                    $sql = "INSERT INTO `session`(`date_debut`, `nom_session` , `id_pedagogie`, `id_formation`,`id_centre`) VALUES ('$dateSession','$nomSession','$idSession1','$idSession2' ,'$idSession3')";
-                    $bdd->query($sql);
-                    $sqlLocaliser = "INSERT INTO `localiser`(`id_formation`, `id_centre`) VALUES ('$idSession2','$idSession3')"; 
-                    $bdd->query($sqlLocaliser);
+                    $sql = "INSERT INTO `session`(`date_debut`, `nom_session`, `id_pedagogie`, `id_formation`, `id_centre`) VALUES (?, ?, ?, ?, ?)";
+                    $stmt = $bdd->prepare($sql);
+                    $stmt->execute([$dateSession, $nomSession, $idSession1, $idSession2, $idSession3]);
+
+                    $sqlLocaliser = "INSERT INTO `localiser`(`id_formation`, `id_centre`) VALUES (?, ?)";
+                    $stmtLocaliser = $bdd->prepare($sqlLocaliser);
+                    $stmtLocaliser->execute([$idSession2, $idSession3]);
+                    
                     echo "Données ajoutées dans la BDD";
                 }
             // modifier données session

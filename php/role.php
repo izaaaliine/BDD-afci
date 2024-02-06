@@ -41,17 +41,21 @@
             // ajouter un role
             if (isset($_POST['submitRole'])){
                 $nomRole = $_POST['nomRole'];
-                $sql = "INSERT INTO `role`(`nom_role`) VALUES ('$nomRole')";
-                $bdd->query($sql);
+                $sql = "INSERT INTO `role`(`nom_role`) VALUES (:nomRole)";
+                $stmt = $bdd->prepare($sql);
+                $stmt->bindParam(':nomRole', $nomRole, PDO::PARAM_STR);
+                $stmt->execute();
                 echo "Données ajoutées dans la BDD";
             }
             // modifier données role
             if (isset($_GET['type']) && $_GET['type'] == "modifier"){
 
                 $id = $_GET["id"];
-                $sqlId = "SELECT * FROM role WHERE id_role = $id";
-                $requeteId = $bdd->query($sqlId);
-                $resultsId = $requeteId->fetch(PDO::FETCH_ASSOC);
+                $sqlId = "SELECT * FROM role WHERE id_role = :id";
+                $stmtId = $bdd->prepare($sqlId);
+                $stmtId->bindParam(':id', $id, PDO::PARAM_INT);
+                $stmtId->execute();
+                $resultsId = $stmtId->fetch(PDO::FETCH_ASSOC);
                 ?>
                 <form method="POST">
                     <input type="hidden" name="updateIdRole" value="<?php  echo $resultsId['id_role']; ?>">
@@ -62,9 +66,11 @@
                 if (isset($_POST["updateRole"])){
                     $updateIdRole = $_POST["updateIdRole"];
                     $updateNomRole = $_POST["updateNomRole"];
-                    $sqlUpdate = "UPDATE `role` SET `nom_role`='$updateNomRole' WHERE id_role = $updateIdRole";
-
-                    $bdd->query($sqlUpdate);
+                    $sqlUpdate = "UPDATE `role` SET `nom_role` = :updateNomRole WHERE id_role = :updateIdRole";
+                    $stmtUpdate = $bdd->prepare($sqlUpdate);
+                    $stmtUpdate->bindParam(':updateIdRole', $updateIdRole, PDO::PARAM_INT);
+                    $stmtUpdate->bindParam(':updateNomRole', $updateNomRole, PDO::PARAM_STR);
+                    $stmtUpdate->execute();
                     echo "Données modifiées";
                 }
             }
@@ -72,13 +78,12 @@
                 if (isset($_GET['type']) && $_GET['type'] == "supprimer") {
                     if (isset($_POST["id_role"])) {
                         $deleteIdRole = $_POST["id_role"];
-                        $sqlDelete = "DELETE FROM `role` WHERE id_role = $deleteIdRole";
-
-                        $bdd->query($sqlDelete);
+                        $sqlDelete = "DELETE FROM `role` WHERE id_role = :deleteIdRole";
+                        $stmtDelete = $bdd->prepare($sqlDelete);
+                        $stmtDelete->bindParam(':deleteIdRole', $deleteIdRole, PDO::PARAM_INT);
+                        $stmtDelete->execute();
                         echo "Données supprimées";
                     }
                 }
-
-
         }
-        ?>
+        ?> 

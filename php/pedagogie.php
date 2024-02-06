@@ -71,8 +71,14 @@
                         $mailPedagogie = $_POST['mailPedagogie'];
                         $numPedagogie = $_POST['numPedagogie'];
                         $idPedagogie = $_POST['idPedagogie'];
-                        $sql = "INSERT INTO `pedagogie`(`nom_pedagogie`, `prenom_pedagogie`, `mail_pedagogie`, `num_pedagogie`, `id_role`) VALUES ('$nomPedagogie','$prenomPedagogie','$mailPedagogie','$numPedagogie','$idPedagogie')";
-                        $bdd->query($sql);
+                        $sql = "INSERT INTO `pedagogie`(`nom_pedagogie`, `prenom_pedagogie`, `mail_pedagogie`, `num_pedagogie`, `id_role`) VALUES (:nomPedagogie, :prenomPedagogie, :mailPedagogie, :numPedagogie, :idPedagogie)";
+                        $stmt = $bdd->prepare($sql);
+                        $stmt->bindParam(':nomPedagogie', $nomPedagogie, PDO::PARAM_STR);
+                        $stmt->bindParam(':prenomPedagogie', $prenomPedagogie, PDO::PARAM_STR);
+                        $stmt->bindParam(':mailPedagogie', $mailPedagogie, PDO::PARAM_STR);
+                        $stmt->bindParam(':numPedagogie', $numPedagogie, PDO::PARAM_STR);
+                        $stmt->bindParam(':idPedagogie', $idPedagogie, PDO::PARAM_INT);
+                        $stmt->execute();
                         echo "Données ajoutées dans la BDD";
                 }
             // modifier les données pedagogie
@@ -119,9 +125,10 @@
                 if (isset($_GET['type']) && $_GET['type'] == "supprimer") {
                     if (isset($_POST["id_pedagogie"])) {
                         $deleteIdPedagogie = $_POST["id_pedagogie"];
-                        $sqlDeletePedagogie = "DELETE FROM `pedagogie` WHERE id_pedagogie = $deleteIdPedagogie";
-
-                        $bdd->query($sqlDeletePedagogie);
+                        $sqlDeletePedagogie = "DELETE FROM `pedagogie` WHERE id_pedagogie = ?";
+                        $stmtDeletePedagogie = $bdd->prepare($sqlDeletePedagogie);
+                        $stmtDeletePedagogie->execute([$deleteIdPedagogie]);
+                        
                         echo "Données supprimées";
                     }
                 }
