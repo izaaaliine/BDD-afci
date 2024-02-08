@@ -66,11 +66,11 @@
             <?php
             // ajouter données pedagogie
                 if (isset($_POST['submitPedagogie'])){
-                        $nomPedagogie = $_POST['nomPedagogie'];
-                        $prenomPedagogie = $_POST['prenomPedagogie'];
-                        $mailPedagogie = $_POST['mailPedagogie'];
-                        $numPedagogie = $_POST['numPedagogie'];
-                        $idPedagogie = $_POST['idPedagogie'];
+                    $nomPedagogie = htmlspecialchars($_POST['nomPedagogie']); 
+                    $prenomPedagogie = htmlspecialchars($_POST['prenomPedagogie']); 
+                    $mailPedagogie = htmlspecialchars($_POST['mailPedagogie']);
+                    $numPedagogie = htmlspecialchars($_POST['numPedagogie']);
+                    $idPedagogie = $_POST['idPedagogie'];
                         $sql = "INSERT INTO `pedagogie`(`nom_pedagogie`, `prenom_pedagogie`, `mail_pedagogie`, `num_pedagogie`, `id_role`) VALUES (:nomPedagogie, :prenomPedagogie, :mailPedagogie, :numPedagogie, :idPedagogie)";
                         $stmt = $bdd->prepare($sql);
                         $stmt->bindParam(':nomPedagogie', $nomPedagogie, PDO::PARAM_STR);
@@ -91,10 +91,10 @@
                     ?>
                     <form method="POST">
                         <input type="hidden" name="updateIdPedagogie" value="<?= $resultsIdPedagogie['id_pedagogie']; ?>">
-                        <input type="text" name="updateNomPedagogie" value="<?= $resultsIdPedagogie['nom_pedagogie']; ?>">
-                        <input type="text" name="updatePrenomPedagogie" value="<?= $resultsIdPedagogie['prenom_pedagogie']; ?>">
-                        <input type="text" name="updateMailPedagogie" value="<?= $resultsIdPedagogie['mail_pedagogie']; ?>">
-                        <input type="text" name="updateNumPedagogie" value="<?= $resultsIdPedagogie['num_pedagogie']; ?>">
+                        <input type="text" name="updateNomPedagogie" value="<?= htmlspecialchars($resultsIdPedagogie['nom_pedagogie']); ?>">
+                        <input type="text" name="updatePrenomPedagogie" value="<?= htmlspecialchars($resultsIdPedagogie['prenom_pedagogie']); ?>">
+                        <input type="text" name="updateMailPedagogie" value="<?= htmlspecialchars($resultsIdPedagogie['mail_pedagogie']); ?>">
+                        <input type="text" name="updateNumPedagogie" value="<?= htmlspecialchars($resultsIdPedagogie['num_pedagogie']); ?>">
                         <select name="updateIdRole" id="">
                         <?php 
                                 foreach( $resultsRole as $value ){             
@@ -108,10 +108,10 @@
                     <?php
                     if (isset($_POST["updatePedagogie"])) {
                         $updateIdPedagogie = $_POST["updateIdPedagogie"];
-                        $updateNomPedagogie = $_POST["updateNomPedagogie"];
-                        $updatePrenomPedagogie = $_POST["updatePrenomPedagogie"];
-                        $updateMailPedagogie = $_POST["updateMailPedagogie"];
-                        $updateNumPedagogie = $_POST["updateNumPedagogie"];
+                        $updateNomPedagogie = htmlspecialchars($_POST["updateNomPedagogie"]); 
+                        $updatePrenomPedagogie = htmlspecialchars($_POST["updatePrenomPedagogie"]); 
+                        $updateMailPedagogie = htmlspecialchars($_POST["updateMailPedagogie"]); 
+                        $updateNumPedagogie = htmlspecialchars($_POST["updateNumPedagogie"]);
                         $updateIdRole = $_POST["updateIdRole"];
 
                         $sqlUpdatePedagogie = "UPDATE `pedagogie` SET `nom_pedagogie`=?, `prenom_pedagogie`=?, `mail_pedagogie`=?, `num_pedagogie`=?, `id_role`=? WHERE `id_pedagogie`=?";

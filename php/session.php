@@ -116,8 +116,8 @@
             <?php
             // ajouter données session
                 if (isset($_POST['submitSession'])){
-                    $dateSession = $_POST['dateSession']; 
-                    $nomSession = $_POST['nomSession'];
+                    $dateSession = htmlspecialchars($_POST['dateSession']);
+                    $nomSession = htmlspecialchars($_POST['nomSession']);
                     $idSession1 = $_POST['idSession1'];
                     $idSession2 = $_POST['idSession2'];
                     $idSession3 = $_POST['idSession3'];
@@ -142,8 +142,8 @@
                     ?>
                     <form method="POST">
                         <input type="hidden" name="updateIdSession" value="<?= $resultsIdSession['id_session']; ?>">
-                        <input type="text" name="updateNomSession" value="<?= $resultsIdSession['nom_session']; ?>">
-                        <input type="text" name="updateDateDebut" value="<?= $resultsIdSession['date_debut']; ?>">
+                        <input type="text" name="updateNomSession" value="<?= htmlspecialchars($resultsIdSession['nom_session']); ?>">
+                        <input type="text" name="updateDateDebut" value="<?= htmlspecialchars($resultsIdSession['date_debut']); ?>">
                         <select name="updateIdPedagogie" id="">
                             <?php 
                             foreach ($resultsPedagogie as $value) {
@@ -173,8 +173,8 @@
                 <?php
                     if (isset($_POST["updateSession"])) {
                         $updateIdSession = $_POST["updateIdSession"];
-                        $updateNomSession = $_POST["updateNomSession"];
-                        $updateDateDebut = $_POST["updateDateDebut"];
+                        $updateNomSession = htmlspecialchars($_POST["updateNomSession"]); // Protection contre les attaques XSS
+                        $updateDateDebut = htmlspecialchars($_POST["updateDateDebut"]);
                         $updateIdPedagogie = $_POST["updateIdPedagogie"];
                         $updateIdFormation = $_POST["updateIdFormation"];
                         $updateIdCentre = $_POST["updateIdCentre"];

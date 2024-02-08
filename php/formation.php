@@ -49,10 +49,10 @@
             <?php
             // ajouter données formation
                 if (isset($_POST['submitFormation'])){
-                    $nomFormation = $_POST['nomFormation'];
-                    $dureeFormation = $_POST['dureeFormation'];
-                    $niveauSortieFormation = $_POST['niveauSortieFormation'];
-                    $descriptionFormation = $_POST['descriptionFormation'];
+                    $nomFormation = htmlspecialchars($_POST['nomFormation']);
+                    $dureeFormation = htmlspecialchars($_POST['dureeFormation']); 
+                    $niveauSortieFormation = htmlspecialchars($_POST['niveauSortieFormation']); 
+                    $descriptionFormation = htmlspecialchars($_POST['descriptionFormation']); 
 
                      $sql = "INSERT INTO `formations`(`nom_formation`, `duree_formation`, `niveau_sortie_formation`, `description`) VALUES (:nomFormation, :dureeFormation, :niveauSortieFormation, :descriptionFormation)";
                     $stmt = $bdd->prepare($sql);
@@ -74,20 +74,22 @@
                 ?>
                     <form method="POST">
                         <input type="hidden" name="updateIdFormation" value="<?= $resultsIdFormation['id_formation']; ?>">
-                        <input type="text" name="updateNomFormation" value="<?= $resultsIdFormation['nom_formation']; ?>">
-                        <input type="text" name="updateDureeFormation" value="<?= $resultsIdFormation['duree_formation']; ?>">
-                        <input type="text" name="updateNiveauFormation" value="<?= $resultsIdFormation['niveau_sortie_formation']; ?>">
-                        <input type="text" name="updateDescriptionFormation" value="<?= $resultsIdFormation['description']; ?>">
+                       <input type="text" name="updateNomFormation" value="<?= htmlspecialchars($resultsIdFormation['nom_formation']); ?>">
+                        <input type="text" name="updateDureeFormation" value="<?= htmlspecialchars($resultsIdFormation['duree_formation']); ?>">
+                        <input type="text" name="updateNiveauFormation" value="<?= htmlspecialchars($resultsIdFormation['niveau_sortie_formation']); ?>">
+                        <input type="text" name="updateDescriptionFormation" value="<?= htmlspecialchars($resultsIdFormation['description']); ?>">
+
                         <input type="submit" name="updateFormation" value="Update Formation">
                     </form>
 
                 <?php
                     if (isset($_POST["updateFormation"])) {
                         $updateIdFormation = $_POST["updateIdFormation"];
-                        $updateNomFormation = $_POST["updateNomFormation"];
-                        $updateDureeFormation = $_POST["updateDureeFormation"];
-                        $updateNiveauFormation = $_POST["updateNiveauFormation"];
-                        $updateDescriptionFormation = $_POST["updateDescriptionFormation"];
+                        $updateNomFormation = htmlspecialchars($_POST["updateNomFormation"]); 
+                        $updateDureeFormation = htmlspecialchars($_POST["updateDureeFormation"]); 
+                        $updateNiveauFormation = htmlspecialchars($_POST["updateNiveauFormation"]); 
+                        $updateDescriptionFormation = htmlspecialchars($_POST["updateDescriptionFormation"]);
+
 
                         $sqlUpdate = "UPDATE `formations` SET `nom_formation`=?, `duree_formation`=?, `niveau_sortie_formation`=?, `description`=? WHERE `id_formation`=?";
                         $stmtUpdate = $bdd->prepare($sqlUpdate);

@@ -131,18 +131,18 @@
             <?php
         // ajouter données apprenants
             if (isset($_POST['submitApprenant'])){
-                $nomApprenant = $_POST['nomApprenant'];
-                $prenomApprenant = $_POST['prenomApprenant'];
-                $mailApprenant = $_POST['mailApprenant'];
-                $adresseApprenant = $_POST['adresseApprenant'];
-                $villeApprenant = $_POST['villeApprenant'];
-                $cpApprenant = $_POST['cpApprenant'];
-                $telApprenant = $_POST['telApprenant'];
-                $dateNaissanceApprenant = $_POST['dateNaissanceApprenant'];
-                $niveauApprenant = $_POST['niveauApprenant'];
-                $numPEApprenant = $_POST['numPEApprenant'];
-                $numSSApprenant = $_POST['numSSApprenant'];
-                $ribApprenant = $_POST['ribApprenant'];
+                $nomApprenant = htmlspecialchars($_POST['nomApprenant']); 
+                $prenomApprenant = htmlspecialchars($_POST['prenomApprenant']); 
+                $mailApprenant = htmlspecialchars($_POST['mailApprenant']); 
+                $adresseApprenant = htmlspecialchars($_POST['adresseApprenant']); 
+                $villeApprenant = htmlspecialchars($_POST['villeApprenant']); 
+                $cpApprenant = htmlspecialchars($_POST['cpApprenant']); 
+                $telApprenant = htmlspecialchars($_POST['telApprenant']); 
+                $dateNaissanceApprenant = htmlspecialchars($_POST['dateNaissanceApprenant']);
+                $niveauApprenant = htmlspecialchars($_POST['niveauApprenant']);
+                $numPEApprenant = htmlspecialchars($_POST['numPEApprenant']); 
+                $numSSApprenant = htmlspecialchars($_POST['numSSApprenant']); 
+                $ribApprenant = htmlspecialchars($_POST['ribApprenant']); 
                 $idApprenant1 = $_POST['idApprenant1'];
                 $idApprenant2 = $_POST['idApprenant2'];
 

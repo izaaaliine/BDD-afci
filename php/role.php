@@ -40,7 +40,7 @@
             <?php
             // ajouter un role
             if (isset($_POST['submitRole'])){
-                $nomRole = $_POST['nomRole'];
+                $nomRole = htmlspecialchars($_POST['nomRole']);
                 $sql = "INSERT INTO `role`(`nom_role`) VALUES (:nomRole)";
                 $stmt = $bdd->prepare($sql);
                 $stmt->bindParam(':nomRole', $nomRole, PDO::PARAM_STR);
@@ -59,13 +59,13 @@
                 ?>
                 <form method="POST">
                     <input type="hidden" name="updateIdRole" value="<?php  echo $resultsId['id_role']; ?>">
-                    <input type="text" name="updateNomRole" value="<?php  echo $resultsId['nom_role']; ?>">
+                    <input type="text" name="updateNomRole" value="<?php  echo htmlspecialchars($resultsId['nom_role']); ?>">
                     <input type="submit" name="updateRole" value="Update Role">
                 </form>
                 <?php
                 if (isset($_POST["updateRole"])){
                     $updateIdRole = $_POST["updateIdRole"];
-                    $updateNomRole = $_POST["updateNomRole"];
+                    $updateNomRole = htmlspecialchars($_POST["updateNomRole"]); 
                     $sqlUpdate = "UPDATE `role` SET `nom_role` = :updateNomRole WHERE id_role = :updateIdRole";
                     $stmtUpdate = $bdd->prepare($sqlUpdate);
                     $stmtUpdate->bindParam(':updateIdRole', $updateIdRole, PDO::PARAM_INT);

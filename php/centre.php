@@ -45,9 +45,9 @@
             <?php
         // ajouter un centre
             if (isset($_POST['submitCentre'])){
-                $villeCentre = $_POST['villeCentre'];
-                $adresseCentre = $_POST['adresseCentre'];
-                $codePostalCentre = $_POST['codePostalCentre'];
+                $villeCentre = htmlspecialchars($_POST['villeCentre']); 
+                $adresseCentre = htmlspecialchars($_POST['adresseCentre']); 
+                $codePostalCentre = htmlspecialchars($_POST['codePostalCentre']);
 
                 $sql = "INSERT INTO `centres` (`ville_centre`, `adresse_centre`, `code_postal_centre`) VALUES (:villeCentre, :adresseCentre, :codePostalCentre)";
                 $stmt = $bdd->prepare($sql);
@@ -67,17 +67,18 @@
                 ?>
                 <form method="POST">
                     <input type="hidden" name="updateIdCentre" value="<?php echo $resultsIdCentre['id_centre']; ?>">
-                    <input type="text" name="updateVilleCentre" value="<?php echo $resultsIdCentre['ville_centre']; ?>">
-                    <input type="text" name="updateAdresseCentre" value="<?php echo $resultsIdCentre['adresse_centre']; ?>">
-                    <input type="text" name="updateCodePostalCentre" value="<?php echo $resultsIdCentre['code_postal_centre']; ?>">
+                    <input type="text" name="updateVilleCentre" value="<?php echo htmlspecialchars($resultsIdCentre['ville_centre']); ?>">
+                    <input type="text" name="updateAdresseCentre" value="<?php echo htmlspecialchars($resultsIdCentre['adresse_centre']); ?>">
+                    <input type="text" name="updateCodePostalCentre" value="<?php echo htmlspecialchars($resultsIdCentre['code_postal_centre']); ?>">
                     <input type="submit" name="updateCentre" value="Update Centre">
                 </form>
                 <?php
                     if (isset($_POST["updateCentre"])) {
                         $updateIdCentre = $_POST["updateIdCentre"];
-                        $updateVilleCentre = $_POST["updateVilleCentre"];
-                        $updateAdresseCentre = $_POST["updateAdresseCentre"];
-                        $updateCodePostalCentre = $_POST["updateCodePostalCentre"];
+                         $updateVilleCentre = htmlspecialchars($_POST["updateVilleCentre"]); 
+                        $updateAdresseCentre = htmlspecialchars($_POST["updateAdresseCentre"]);
+                        $updateCodePostalCentre = htmlspecialchars($_POST["updateCodePostalCentre"]); 
+    
                         $sqlUpdate = "UPDATE `centres` SET `ville_centre`=?, `adresse_centre`=?, `code_postal_centre`=? WHERE `id_centre`=?";
                         $stmt = $bdd->prepare($sqlUpdate);
                         $stmt->execute([$updateVilleCentre, $updateAdresseCentre, $updateCodePostalCentre, $updateIdCentre]);
