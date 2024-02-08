@@ -33,6 +33,7 @@ try {
             <a href="?page=session"><li>Session</li></a>
             <a href="?page=apprenant"><li>Apprenants</li></a>
             <a href="?page=affecter"><li>Affecter</li></a>
+            <a href="?page=connexion"><li>Connexion</li></a>
         </ul></div>
     <div class="page1">
 <?php
@@ -59,6 +60,7 @@ $pass = "admin"; // Remplacez par votre mot de passe
     require('session.php');
     require('apprenant.php');
     require('affecter.php');
+    require('connexion.php');
 
 ?>
 </div>
